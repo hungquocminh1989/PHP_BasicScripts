@@ -32,6 +32,30 @@ abstract class abst_class_B extends abst_class_A //Lớp kế thừa
 		echo "fn_B";
 	}
 }
+abstract class abst_class_C extends abst_class_B
+{
+	public function this_C() 
+	{
+		$this->fn_C_1();
+	}
+	public function static_C() 
+	{
+		static::fn_C_1();
+	}
+	public static function static_C_1() 
+	{
+		static::fn_C_1();
+	}
+	public function self_C() 
+	{
+		self::fn_C_1();
+	}
+	public function fn_C_1() 
+	{
+		echo "<br>";
+		echo "fn_C_1";
+	}
+}
 
 /**
 * ★★★★★★★★★★
@@ -52,7 +76,7 @@ interface iB //Lớp giao diện
 * NORMAL CLASS
 * ★★★★★★★★★★
 */
-class sample extends abst_class_B implements iA,iB //1 lớp chỉ kế thừa được duy nhất 1 lớp khác và kế thừa được nhiều lớp giao diện
+class sample extends abst_class_C implements iA,iB //1 lớp chỉ kế thừa được duy nhất 1 lớp khác và kế thừa được nhiều lớp giao diện
 {
 	public function interface_A()
 	{
@@ -63,6 +87,16 @@ class sample extends abst_class_B implements iA,iB //1 lớp chỉ kế thừa �
 	{
 		echo "<br>";
 		echo "Overide interface_B";
+	}
+	function fn_A()
+	{
+		echo "<br>";
+		echo "Overide fn_A";
+	}
+	public function fn_C_1() 
+	{
+		echo "<br>";
+		echo "Overide fn_C_1";
 	}
 	public function exec_A()
 	{
@@ -83,5 +117,12 @@ class sample extends abst_class_B implements iA,iB //1 lớp chỉ kế thừa �
 $model = new sample();
 $model->exec_A();
 $model->exec_B();
+
+//Sự khác biệt giữa self / $this / static
+$model->this_C();//This : Truy xuất đến đối tượng hiện tại.
+$model->self_C();//Self : Truy xuất đến class khai báo nó.
+$model->static_C();//Static: Truy xuất đến đối tượng hiện tại.
+sample::static_C_1();//Static: Truy xuất đến đối tượng hiện tại.
+abst_class_C::static_C_1();//Static: Truy xuất đến đối tượng hiện tại.
 
 ?>
