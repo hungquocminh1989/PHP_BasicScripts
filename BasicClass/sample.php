@@ -111,6 +111,45 @@ class sample extends abst_class_C implements iA,iB //1 lớp chỉ kế thừa �
 
 /**
 * ★★★★★★★★★★
+* SAMPLE DEPENDENCY INJECTION
+* ★★★★★★★★★★
+*/
+interface DI_Thong_Bao //Lớp giao diện
+{
+	public function gui_thong_bao();
+}
+class sample_dependency_injection
+{
+	public $obj_di = NULL;
+	
+	public function __construct (DI_Thong_Bao $di){
+		$this->obj_di = $di;
+	}
+	
+	public function change_di(DI_Thong_Bao $di){
+		$this->obj_di = $di;
+	}
+	public function gui(){
+		$this->obj_di->gui_thong_bao();
+	}
+}
+
+class email implements DI_Thong_Bao {
+	public function gui_thong_bao(){
+		echo "<br>";
+		echo "gui thong bao mail";
+	}
+}
+
+class sms implements DI_Thong_Bao {
+	public function gui_thong_bao(){
+		echo "<br>";
+		echo "gui thong bao sms";
+	}
+}
+
+/**
+* ★★★★★★★★★★
 * USE CLASS
 * ★★★★★★★★★★
 */
@@ -124,5 +163,15 @@ $model->self_C();//Self : Truy xuất đến class khai báo nó.
 $model->static_C();//Static: Truy xuất đến đối tượng hiện tại.
 sample::static_C_1();//Static: Truy xuất đến đối tượng hiện tại.
 abst_class_C::static_C_1();//Static: Truy xuất đến đối tượng hiện tại.
+
+//SAMPLE DEPENDENCY INJECTION
+$email = new email();
+$sms = new sms();
+
+$thongbao = new sample_dependency_injection($email);
+$thongbao->gui();
+
+$thongbao->change_di($sms);
+$thongbao->gui();
 
 ?>
